@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { default as credit } from "./hackathon.json";
+import { default as credit } from "../contract/contract.json";
 import { ethers } from "ethers";
 
 const Buy = () => {
@@ -22,7 +22,7 @@ const Buy = () => {
 
   const signer = provider.getSigner();
 
-  const contractAddress = "0x1b7330d658d6208aa3ad6296ec86ec542dbf2633";
+  const contractAddress = process.env.REACT_APP_CONTRACT;
 
   const ABI = credit;
 

@@ -109,9 +109,6 @@ const Contact = () => {
                 >
                  SEND CONCERN
                 </button>
-                
-
-
               </form>
             </div>
           </div>

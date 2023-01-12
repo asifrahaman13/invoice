@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import { ethers } from "ethers";
-import { default as credit } from "./hack.json";
+import { default as credit } from "../contract/contract.json";
 
 const Navbar = () => {
 
@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const signer = provider.getSigner();
 
-  const contractAddress = "0x1b7330d658d6208aa3ad6296ec86ec542dbf2633";
+  const contractAddress = process.env.REACT_APP_CONTRACT;
 
   const ABI = credit;
 
