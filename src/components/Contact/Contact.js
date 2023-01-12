@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { default as credit } from "./contact.json";
+import { default as credit } from "../contract/contract.json";
 import { ethers } from "ethers";
 
 const Contact = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Skills from "../skills/Skills";
 import { ethers } from "ethers";
-
 import { default as credit } from "../contract/contract.json";
+import Stats from "./Stats/Stats";
+import Available from "./Available/Available";
 
 const Home = () => {
   const [name, setName] = useState("");
@@ -15,14 +15,14 @@ const Home = () => {
   const [buyers_pan, setBuyers_pan] = useState("");
   const [buyersName, setBuyersName] = useState("");
   const [product_id, setProduct_id] = useState("");
-  const [cancel,setCancel]=useState(0);
+  const [cancel, setCancel] = useState(0);
 
   const [b, setB] = useState([]);
 
   const [stat, setStat] = useState({
     total_products: 0,
     total_buyers: 0,
-    total_dellers: 0,
+    total_sellers: 0,
   });
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -83,83 +83,25 @@ const Home = () => {
 
   const stats = async (e) => {
     e.preventDefault();
+    console.log("clicked")
     const tx1 = await contract.TotalSellers();
     const tx2 = await contract.TotalBuyers();
     const tx3 = await contract.TotalProducts();
-
-    const ty1 = ethers.utils.formatEther(tx1, 0) * 1000000000000000000;
-    // console.log(ethers.utils.formatEther(tx1, 0) * 1000000000000000000);
-    const ty2 = ethers.utils.formatEther(tx2, 0) * 1000000000000000000;
-    // console.log(ethers.utils.formatEther(tx2, 0) * 1000000000000000000);
-    const ty3 = ethers.utils.formatEther(tx3, 0) * 1000000000000000000;
-    // console.log(ethers.utils.formatEther(tx3, 0) * 1000000000000000000);
-
     setStat({
-      total_products: ty1,
-      total_buyers: ty2,
-      total_dellers: ty3,
+      total_products: ethers.utils.formatEther(tx1, 18) * 1e18,
+      total_buyers: ethers.utils.formatEther(tx2, 0) * 1e18,
+      total_sellers: ethers.utils.formatEther(tx3, 0) * 1e18,
     });
   };
 
-  const CancelProduct=async(e)=>{
-      e.preventDefault();
-      const tx=await contract.cancel(cancel);
-      console.log(cancel)
-  }
+  const CancelProduct = async (e) => {
+    e.preventDefault();
+    const tx = await contract.cancel(cancel);
+  };
 
   return (
     <>
-  
-      <button id="stats" onClick={stats}></button>
-
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto flex flex-wrap">
-          <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
-            <div class="w-full sm:p-4 px-4 mb-6">
-              <h1 class="title-font font-medium text-xl mb-2 text-pink-600">
-                Welcome to the blockmerse
-              </h1>
-              <div class="leading-relaxed">
-                In this platform you can securely have your products listed and
-                anyone can buy your products. You can also track your invoices
-                through your pan card ids. .
-              </div>
-            </div>
-            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
-                {stat.total_products}
-              </h2>
-              <p class="leading-relaxed">Total sellers</p>
-            </div>
-            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
-                {stat.total_buyers}
-              </h2>
-              <p class="leading-relaxed">Total Buyers</p>
-            </div>
-            <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
-                {stat.total_products}
-              </h2>
-              <p class="leading-relaxed">Total Products</p>
-            </div>
-          </div>
-          <div class="lg:w-1/2 sm:w-1/3 w-full rounded-lg overflow-hidden mt-6 sm:mt-0">
-            <img
-              class="object-cover object-center w-full h-full"
-              src="https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YmxvY2tjaGFpbnxlbnwwfHwwfHw%3D&w=1000&q=80"
-              alt="stats"
-            />
-          </div>
-          <button className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 mx-1 font-bold">
-          SUBSCRIBE
-        </button>
-        <button className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 font-bold">
-          CONTACT US
-        </button>
-        </div>
-      </section>
-
+      <Stats total_products={stat.total_products} total_buyers={stat.total_buyers} total_sellers={stat.total_sellers} stats={stats}/>
       <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
@@ -286,7 +228,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
@@ -363,9 +304,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-
-
       <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
@@ -395,8 +333,7 @@ const Home = () => {
                   />
                 </div>
               </div>
-             
-          
+
               <div class="p-2 w-full">
                 <button
                   class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
@@ -409,72 +346,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <div class="p-10 w-ful">
-        <button
-          class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
-          onClick={showProducts}
-          id="c"
-        >
-          CHECK ALL AVAILBALE PRODUCTS
-        </button>
-      </div>
-
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -m-4">
-            {b.map((item, idx) => {
-              return (
-                <>
-                  <div class="p-4 lg:w-1/3">
-                    <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
-                  
-                      <h2 class="title-font sm:text-2xl text-xl font-medium text-pink-500 mb-3 py-2">
-                        {item.Product_Name}
-                      </h2>
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Owner
-                      </h1>
-                      <p>{item.Product_Owner}</p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Description
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {item.Product_Description}
-                        lorem400
-                      </p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Price
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {ethers.utils.formatEther(item.Product_Price, 0)*1000000000000000000}
-                      </p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
-                        Product id
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {ethers.utils.formatEther(item.product_id, 10) *
-                          1000000000000000000}
-                      </p>
-                    
-                      <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                      
-                        
-                      </div>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
+      <Available showProducts={showProducts} b={b}/>
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
           <h1 class="text-3xl font-medium title-font text-pink-600 mb-12 text-center">
@@ -492,7 +364,9 @@ const Home = () => {
                   <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
                 </svg>
                 <p class="leading-relaxed mb-6">
-                  Block-merce is the perfect place for the people who wants to sell their products online. This is the best marketplace for the sellers and the buyers to interact online.
+                  Block-merce is the perfect place for the people who wants to
+                  sell their products online. This is the best marketplace for
+                  the sellers and the buyers to interact online.
                 </p>
                 <a class="inline-flex items-center">
                   <img
