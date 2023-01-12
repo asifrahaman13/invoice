@@ -2,6 +2,73 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "deleveryagent",
+				"type": "address"
+			}
+		],
+		"name": "AddDeleveryAgent",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_ProductId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_buyeresPAN",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"name": "Buy",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_ProductId",
+				"type": "uint256"
+			}
+		],
+		"name": "cancel",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_ProductId",
+				"type": "uint256"
+			}
+		],
+		"name": "delivered",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "available",
 				"type": "uint256"
@@ -25,6 +92,44 @@
 		],
 		"name": "Unauthorized",
 		"type": "error"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "Buyer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			}
+		],
+		"name": "LogCancel",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "productId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "sold",
+				"type": "bool"
+			}
+		],
+		"name": "LogDelevered",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -79,67 +184,13 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_ProductId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "timeStamp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_buyeresPAN",
-				"type": "string"
-			},
-			{
 				"internalType": "string",
 				"name": "_name",
 				"type": "string"
-			}
-		],
-		"name": "Buy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_ProductId",
-				"type": "uint256"
 			},
 			{
-				"internalType": "uint256",
-				"name": "timeStamp",
-				"type": "uint256"
-			}
-		],
-		"name": "cancel",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_ProductId",
-				"type": "uint256"
-			}
-		],
-		"name": "delivered",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "string",
-				"name": "_name",
+				"name": "_sellersPAN",
 				"type": "string"
 			},
 			{
@@ -172,19 +223,14 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "productId",
+				"name": "_ProductId",
 				"type": "uint256"
 			}
 		],
-		"name": "WithdrawOwner",
+		"name": "AmountPaid",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
 	},
 	{
 		"inputs": [],
@@ -503,6 +549,25 @@
 				"type": "uint256"
 			}
 		],
+		"name": "ProductID",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
 		"name": "ProductStatus",
 		"outputs": [
 			{
@@ -518,6 +583,105 @@
 			{
 				"internalType": "uint256",
 				"name": "Time_Lock",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "s",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "invoiceAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "invoiceDate",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_s",
+				"type": "string"
+			}
+		],
+		"name": "SellersDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "invoiceAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "invoiceDate",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct EthCart.SellersPanDetails[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "SellersPanMapping",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "invoiceAmount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "invoiceDate",
 				"type": "uint256"
 			}
 		],

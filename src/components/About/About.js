@@ -6,8 +6,8 @@ const About = () => {
     <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-col text-center w-full mb-20">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">Our Team</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">We are a company and a marketplace where the sellers can sell their products online. Anyone can buy the products. We provie all the delivery system feasible and acts as an orale between the seller and the buyers.</p>
     </div>
     <div class="flex flex-wrap -m-2">
       <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
