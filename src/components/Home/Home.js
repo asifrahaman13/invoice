@@ -3,6 +3,8 @@ import { ethers } from "ethers";
 import { default as credit } from "../contract/contract.json";
 import Stats from "./Stats/Stats";
 import Available from "./Available/Available";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [name, setName] = useState("");
@@ -49,59 +51,108 @@ const Home = () => {
 
   const submitOnChain = async (e) => {
     e.preventDefault();
-    const txi = await contract.Submit(
-      name,
-      pan,
-      productname,
-      description,
-      price,
-      id
-    );
+    try {
+      const tx = await contract.Submit(
+        name,
+        pan,
+        productname,
+        description,
+        price,
+        id
+      );
+      if (tx.length != 0) {
+        toast.success("Yout product is listed successfully.");
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong.", err);
+    }
   };
 
   const BuyOnchain = async (e) => {
     e.preventDefault();
-    const txi = await contract.Buy(product_id, buyers_pan, buyersName);
+    try {
+      const tx = await contract.Buy(product_id, buyers_pan, buyersName);
+      if (tx.length != 0) {
+        toast.success("You brought this product successfully");
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong.", err);
+    }
   };
 
   const showProducts = async (e) => {
     e.preventDefault();
-    const p = await contract.AvailableProducts();
-    const t = [];
-    const a = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-      }
-      return array;
-    };
+    try {
+      const p = await contract.AvailableProducts();
+      const t = [];
+      const a = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+        return array;
+      };
 
-    setB(a(p.slice(0, 6)));
+      setB(a(p.slice(0, 6)));
+    } catch (err) {
+      toast.error("Something went wrong.", err);
+    }
   };
 
   const stats = async (e) => {
     e.preventDefault();
-    console.log("clicked")
-    const tx1 = await contract.TotalSellers();
-    const tx2 = await contract.TotalBuyers();
-    const tx3 = await contract.TotalProducts();
-    setStat({
-      total_products: ethers.utils.formatEther(tx1, 18) * 1e18,
-      total_buyers: ethers.utils.formatEther(tx2, 0) * 1e18,
-      total_sellers: ethers.utils.formatEther(tx3, 0) * 1e18,
-    });
+    try{
+      const tx1 = await contract.TotalSellers();
+      const tx2 = await contract.TotalBuyers();
+      const tx3 = await contract.TotalProducts();
+      setStat({
+        total_products: ethers.utils.formatEther(tx1, 0) * 1e18,
+        total_buyers: ethers.utils.formatEther(tx2, 0) * 1e18,
+        total_sellers: ethers.utils.formatEther(tx3, 0) * 1e18,
+      });
+      if(tx1.length!=0 && tx2.length!=0 && tx3.length!=0){
+        
+      }
+      else{
+        toast.error("Something went wrong")
+      }
+    }
+    catch(err){
+      toast.error("Somthing went wrong",err)
+    }
+    
   };
 
   const CancelProduct = async (e) => {
     e.preventDefault();
-    const tx = await contract.cancel(cancel);
+    try{
+      const tx = await contract.cancel(cancel);
+    }
+    catch(err){
+      if(cancel==""){
+        toast.error("Please enter a id")
+      }
+      else{
+          toast.error("Somthing went wrong",err);
+      }
+    }
+    
   };
 
   return (
     <>
-      <Stats total_products={stat.total_products} total_buyers={stat.total_buyers} total_sellers={stat.total_sellers} stats={stats}/>
+      <Stats
+        total_products={stat.total_products}
+        total_buyers={stat.total_buyers}
+        total_sellers={stat.total_sellers}
+        stats={stats}
+      />
       <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
@@ -346,7 +397,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <Available showProducts={showProducts} b={b}/>
+      <Available showProducts={showProducts} b={b} />
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
           <h1 class="text-3xl font-medium title-font text-pink-600 mb-12 text-center">
@@ -414,6 +465,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
+
     </>
   );
 };

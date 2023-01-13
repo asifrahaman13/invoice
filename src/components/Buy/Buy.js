@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { default as credit } from "../contract/contract.json";
 import { ethers } from "ethers";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Buy = () => {
   const [data, setData] = useState([]);
@@ -10,8 +12,8 @@ const Buy = () => {
   const [agent, setAgent] = useState("");
   const [paid, setPaid] = useState("");
   const [delivered, setDelivered] = useState("");
-  const [sellerspan,setSellerspan] = useState("");
-  const [sellersdata,setSellersData] = useState([]);
+  const [sellerspan, setSellerspan] = useState("");
+  const [sellersdata, setSellersData] = useState([]);
   const [trackData, setTrackdata] = useState({
     status: "",
     owner: "",
@@ -47,49 +49,88 @@ const Buy = () => {
 
   const track = async (e) => {
     e.preventDefault();
-
-    const setStatusCode=(n)=>{
-        if(n==1){
-          return "Available";
+    try {
+      const setStatusCode = (n) => {
+        if (n == 0) {
+          return "Available for sale";
         }
-        else if(n==2){
+        if (n == 1) {
           return "Ordered";
+        } else if (n == 3) {
+          return "Paid by buyer";
+        } else if (n == 4) {
+          return "Product sold out";
+        } else {
+          return n;
         }
-        else if(n==4){
-          return "Item delivered";
-        }
+      };
+      const tx = await contract.track_Status(productid);
+      setTrackdetails(tx);
+      setTrackdata({
+        status: setStatusCode(tx.Status),
+        owner: tx.Buyer_Owner,
+        timelock: ethers.utils.formatEther(trackdetails.Time_Lock, 0) * 1e18,
+      });
+      if (tx.length != 0) {
+        toast.success("product information is available");
+      }
+    } catch (err) {
+      toast.error("No such product is available" );
     }
-
-
-
-
-    const tx = await contract.track_Status(productid);
-    console.log(tx);
-    setTrackdetails(tx);
-    setTrackdata({
-      status: setStatusCode(tx.Status),
-      owner: tx.Buyer_Owner,
-      timelock: ethers.utils.formatEther(trackdetails.Time_Lock, 0)*1000000000000000000,
-    });
   };
 
   const addDeliveryAgent = async () => {
-    const tx = await contract.AddDeleveryAgent(agent);
+    try {
+      const tx = await contract.AddDeleveryAgent(agent);
+      if (tx.length == 0) {
+        toast.error("Somthing went wrong");
+      } else {
+        toast.success("Delivery agent has been succesffully added");
+      }
+    } catch (err) {
+      toast.error("Delivery agent not added", err);
+    }
   };
 
   const pricePaid = async () => {
-    const tx = await contract.AmountPaid(paid);
+    try {
+      const tx = await contract.AmountPaid(paid);
+      if (tx.length == 0) {
+        toast.error("Something went wrong");
+      } else {
+        toast.success("Message added to blockchain");
+      }
+    } catch (err) {
+      toast.error("Delivery agent not added", err);
+    }
   };
 
   const itemDelivered = async () => {
-    const tx = await contract.delivered(delivered);
+    try {
+      const tx = await contract.delivered(delivered);
+      if (tx.length == 0) {
+        toast.error("Somthing went wrong");
+      } else {
+        toast.success("Message sent successfully.");
+      }
+    } catch (err) {
+      toast.error("Message not added to blockchain", err);
+    }
   };
 
   const sellersData = async (e) => {
     e.preventDefault();
-    const tx = await contract.SellersDetails(sellerspan);
-    setSellersData(tx);
-    console.log(tx);
+    try {
+      const tx = await contract.SellersDetails(sellerspan);
+      setSellersData(tx);
+      if (tx.length == 0) {
+        toast.error("Something went wrong");
+      } else {
+        toast.success("Sellers data is successfulluy available");
+      }
+    } catch (err) {
+      toast.error("Something went wrong fetching sellers data.");
+    }
   };
 
   return (
@@ -214,8 +255,6 @@ const Buy = () => {
         </div>
       </section>
 
-      
-
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-20">
@@ -230,154 +269,147 @@ const Buy = () => {
             </p>
           </div>
           <section class="text-gray-600 body-font relative">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-col text-center w-full mb-12">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
-              TRACK BUYERS INVOICE THROUGH YOUR PAN
-            </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-              gentrify.
-            </p>
-          </div>
-          <div>
-            <div>
+            <div class="container px-5 py-24 mx-auto">
+              <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
+                  TRACK BUYERS INVOICE THROUGH YOUR PAN
+                </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                  Whatever cardigan tote bag tumblr hexagon brooklyn
+                  asymmetrical gentrify.
+                </p>
+              </div>
               <div>
-                <div class="relative">
-                  <label for="name" class="leading-7 text-sm text-gray-600">
-                    Enter your buyers pan
-                  </label>
-                  <input
-                    name="pan"
-                    onChange={(e) => {
-                      setPan(e.target.value);
-                    }}
-                    type="text"
-                    placeholder="Track your invoice through buyer's pan"
-                    id="name"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
-                </div>
-              </div>
-
-              <div class="p-2 w-full">
-                <button
-                  onClick={display}
-                  class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pnk-600 rounded text-lg"
-                >
-                  CHECK INVOICES
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -m-4">
-            {data.map((item, idx) => {
-              return (
-
-                <>
-                  <div class="p-4 lg:w-1/3">
-                    
-                    <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
-                    <div className="text-xs font-bold text-pink-500">INVOICE NO: {idx+1}</div>
-                    <br />
-                     <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product name
-                        </h1>
-                      <p>{item.name}</p>
-                      <br />
-
-
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Time stamp
-                      </h1>
-                      <p> {item.invoiceDate.toString()}</p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Price
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {item.invoiceAmount.toString()}
-                      </p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Description
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                      {item.ProductDescription.toString()}
-                      </p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
-                       Sellers Transaction Id
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {item.transactionFrom.toString()}
-                      </p>
-                    
-                      <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                      
-                     
-
-                      </div>
+                <div>
+                  <div>
+                    <div class="relative">
+                      <label for="name" class="leading-7 text-sm text-gray-600">
+                        Enter your buyers pan
+                      </label>
+                      <input
+                        name="pan"
+                        onChange={(e) => {
+                          setPan(e.target.value);
+                        }}
+                        type="text"
+                        placeholder="Track your invoice through buyer's pan"
+                        id="name"
+                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
                     </div>
                   </div>
-                </>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
-
-
-      <section class="text-gray-600 body-font relative">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-col text-center w-full mb-12">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
-              TRACK SELLERS INVOICE THROUGH YOUR PAN
-            </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-              gentrify.
-            </p>
-          </div>
-          <div>
-            <div>
-              <div>
-                <div class="relative">
-                  <label for="name" class="leading-7 text-sm text-gray-600">
-                    Enter your sellers pan
-                  </label>
-                  <input
-                    name="pan"
-                    onChange={(e) => {
-                      setSellerspan(e.target.value);
-                    }}
-                    type="text"
-                    placeholder="Track your invoices through sellers pan"
-                    id="name"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                  />
+                  <div class="p-2 w-full">
+                    <button
+                      onClick={display}
+                      class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pnk-600 rounded text-lg"
+                    >
+                      CHECK INVOICES
+                    </button>
+                  </div>
                 </div>
               </div>
+            </div>
+          </section>
+          <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+              <div class="flex flex-wrap -m-4">
+                {data.map((item, idx) => {
+                  return (
+                    <>
+                      <div class="p-4 lg:w-1/3">
+                        <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
+                          <div className="text-xs font-bold text-pink-500">
+                            INVOICE NO: {idx + 1}
+                          </div>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Product name
+                          </h1>
+                          <p>{item.name}</p>
+                          <br />
 
-              <div class="p-2 w-full">
-                <button
-                  onClick={sellersData}
-                  class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pnk-600 rounded text-lg"
-                >
-                  CHECK INVOICES
-                </button>
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Time stamp
+                          </h1>
+                          <p> {item.invoiceDate.toString()}</p>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Product Price
+                          </h1>
+                          <p class="leading-relaxed mb-3">
+                            {" "}
+                            {item.invoiceAmount.toString()}
+                          </p>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Product Description
+                          </h1>
+                          <p class="leading-relaxed mb-3">
+                            {item.ProductDescription.toString()}
+                          </p>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
+                            Sellers Transaction Id
+                          </h1>
+                          <p class="leading-relaxed mb-3">
+                            {" "}
+                            {item.transactionFrom.toString()}
+                          </p>
+
+                          <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4"></div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+
+          <section class="text-gray-600 body-font relative">
+            <div class="container px-5 py-24 mx-auto">
+              <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
+                  TRACK SELLERS INVOICE THROUGH YOUR PAN
+                </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                  Whatever cardigan tote bag tumblr hexagon brooklyn
+                  asymmetrical gentrify.
+                </p>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    <div class="relative">
+                      <label for="name" class="leading-7 text-sm text-gray-600">
+                        Enter your sellers pan
+                      </label>
+                      <input
+                        name="pan"
+                        onChange={(e) => {
+                          setSellerspan(e.target.value);
+                        }}
+                        type="text"
+                        placeholder="Track your invoices through sellers pan"
+                        id="name"
+                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="p-2 w-full">
+                    <button
+                      onClick={sellersData}
+                      class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pnk-600 rounded text-lg"
+                    >
+                      CHECK INVOICES
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* {data.map((item, i) => {
             return (
@@ -423,67 +455,58 @@ const Buy = () => {
             );
           })} */}
 
+          <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+              <div class="flex flex-wrap -m-4">
+                {sellersdata.map((item, idx) => {
+                  return (
+                    <>
+                      <div class="p-4 lg:w-1/3">
+                        <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
+                          <div className="text-xs font-bold text-pink-500">
+                            INVOICE NO: {idx + 1}
+                          </div>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Product name
+                          </h1>
+                          <p>{item.name}</p>
+                          <br />
 
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Time stamp
+                          </h1>
+                          <p>
+                            {" "}
+                            {ethers.utils.formatEther(item.invoiceDate, 0) *
+                              1000000000000000000}
+                          </p>
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                            Product Price
+                          </h1>
+                          <p class="leading-relaxed mb-3">
+                            {" "}
+                            {ethers.utils.formatEther(item.invoiceAmount, 0) *
+                              1000000000000000000}
+                          </p>
+                          <br />
+                          <br />
+                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
+                            Sellers Transaction Id
+                          </h1>
 
-
-
-
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -m-4">
-            {sellersdata.map((item, idx) => {
-              return (
-
-                <>
-                  <div class="p-4 lg:w-1/3">
-                    
-                    <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
-                    <div className="text-xs font-bold text-pink-500">INVOICE NO: {idx+1}</div>
-                    <br />
-                     <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product name
-                        </h1>
-                      <p>{item.name}</p>
-                      <br />
-
-
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Time stamp
-                      </h1>
-                      <p> {ethers.utils.formatEther(item.invoiceDate,0)*1000000000000000000}</p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Price
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {ethers.utils.formatEther(item.invoiceAmount,0)*1000000000000000000}
-                      </p>
-                      <br />
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
-                       Sellers Transaction Id
-                      </h1>
-                     
-                    
-                      <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                      
-                        
+                          <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4"></div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </>
-              );
-            })}
-          </div>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
         </div>
       </section>
-
-
-        </div>
-      </section>
-
-      
 
       <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-24 mx-auto">
@@ -588,6 +611,7 @@ const Buy = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </>
   );
 };
