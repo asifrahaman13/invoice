@@ -44,7 +44,6 @@ const Buy = () => {
     e.preventDefault();
     const tx = await contract.DetailsFromPan(pan);
     setData(tx);
-    console.log(tx);
   };
 
   const track = async (e) => {
@@ -88,7 +87,7 @@ const Buy = () => {
         toast.success("Delivery agent has been succesffully added");
       }
     } catch (err) {
-      toast.error("Delivery agent not added", err);
+      toast.error("Delivery agent not added");
     }
   };
 
@@ -101,7 +100,7 @@ const Buy = () => {
         toast.success("Message added to blockchain");
       }
     } catch (err) {
-      toast.error("Delivery agent not added", err);
+      toast.error("Message not added to blockchain", err);
     }
   };
 
@@ -207,7 +206,7 @@ const Buy = () => {
                   onClick={pricePaid}
                   class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
                 >
-                  AMOUUNT PAID
+                  AMOUNT PAID
                 </button>
               </div>
             </div>

@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [buy_events,setBuyevents]=useState([]);
-  const [cancel_events,setCancelevents]=useState([]);
   const [deliver_events,setDeliverEvents]=useState([]);
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -48,8 +47,12 @@ const Events = () => {
   };
 
   const getDeliverEvents=async () => {
-    let eventFilter = contract.filters.LogDelivered();
+    let eventFilter = contract.filters.LogDelievered();
     let event = await contract.queryFilter(eventFilter);
+    console.log(event);
+    event.map((item,idx)=>{
+      console.log(item.blockHash)
+    })
     const shuffle = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -60,7 +63,7 @@ const Events = () => {
       return array;
     };
 
-    setDeliverEvents(shuffle(event).slice(0, 6));
+    setDeliverEvents(shuffle(event).slice(0, 6))
   }
 
   const getBuyEvents=async()=>{
@@ -75,7 +78,6 @@ const Events = () => {
       }
       return array;
     };
-
     setBuyevents(shuffle(event).slice(0, 6));
   }
 
@@ -228,35 +230,21 @@ const Events = () => {
             {deliver_events.map((item, idx) => {
               return (
                 <>
-                  <div class="p-4 lg:w-1/3">
+                  <div class="p-4 lg:w-1/2">
                     <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden relative text-justify">
                       <div className="text-xs font-bold text-pink-500">
                         {idx + 1}.BLOCK NUMBER: {item.blockNumber}
+                        
                       </div>
                       <br />
                       <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Owner
+                        Block Hash
                       </h1>
-                      <p>{ethers.utils.formatEther(item.args.productId,0)*1e18}</p>
-                      <br />
-
+                      <p>{item.blockHash}</p>
                       <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
                         Product Id
                       </h1>
-                      <p>
-                        {item.args.sold}
-                      </p>
-                      <br />
-                      <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Price
-                      </h1>
-                      <p class="leading-relaxed mb-3">
-                        {" "}
-                        {ethers.utils.formatEther(item.args.Product_Price) *
-                          1e18}
-                      </p>
-                      <br />
-
+                      <p>{ethers.utils.formatEther(item.args.productId,0)*1e18}</p>
                       <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4"></div>
                     </div>
                   </div>
