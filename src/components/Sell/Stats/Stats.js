@@ -4,7 +4,7 @@ const Stats = ({ total_products, total_buyers, total_sellers, stats }) => {
   return (
     <>
       <button id="stats" onClick={stats}></button>
-      <section class="text-gray-600 body-font">
+      <section class="text-gray-400 body-font">
         <div class="container px-5 py-24 mx-auto flex flex-wrap">
           <div class="flex flex-wrap -mx-4 mt-auto mb-auto lg:w-1/2 sm:w-2/3 content-start sm:pr-10">
             <div class="w-full sm:p-4 px-4 mb-6">
@@ -18,19 +18,19 @@ const Stats = ({ total_products, total_buyers, total_sellers, stats }) => {
               </div>
             </div>
             <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
+              <h2 class="title-font font-medium text-3xl text-white">
                 {total_products}
               </h2>
               <p class="leading-relaxed">Total sellers</p>
             </div>
             <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
+              <h2 class="title-font font-medium text-3xl text-white">
                 {total_buyers}
               </h2>
               <p class="leading-relaxed">Total Buyers</p>
             </div>
             <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-              <h2 class="title-font font-medium text-3xl text-pink-600">
+              <h2 class="title-font font-medium text-3xl text-white">
                 {total_sellers}
               </h2>
               <p class="leading-relaxed">Total Products</p>

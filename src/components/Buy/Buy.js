@@ -74,7 +74,7 @@ const Buy = () => {
         toast.success("product information is available");
       }
     } catch (err) {
-      toast.error("No such product is available" );
+      toast.error("No such product is available");
     }
   };
 
@@ -140,7 +140,7 @@ const Buy = () => {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               ADD DELIVERY AGENT(AUTHORITY)
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               Add delivery agent for the product delivey
             </p>
           </div>
@@ -148,6 +148,9 @@ const Buy = () => {
             <div>
               <div>
                 <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-white">
+                    Add address of the delivery agent
+                  </label>
                   <input
                     name="agent"
                     onChange={(e) => {
@@ -180,7 +183,7 @@ const Buy = () => {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               DELIVERY AGENT
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               Whether Amount is paid by the user(enter the product id)
             </p>
           </div>
@@ -188,6 +191,9 @@ const Buy = () => {
             <div>
               <div>
                 <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-white">
+                    Enter the product Id
+                  </label>
                   <input
                     name="paid"
                     onChange={(e) => {
@@ -220,7 +226,7 @@ const Buy = () => {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               DELIVERY AGENT
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               Whether item is delivered(enter product id)
             </p>
           </div>
@@ -228,6 +234,9 @@ const Buy = () => {
             <div>
               <div>
                 <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-white">
+                    Enter the product Id of the product delivered
+                  </label>
                   <input
                     name="agent"
                     onChange={(e) => {
@@ -260,7 +269,7 @@ const Buy = () => {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               See all the previous invoice from the pan
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               All the informations displayed here are protected and we do not
               have any rights over it. Your personal information over the
               blockchain is secured and we do not intervene in the process.
@@ -273,7 +282,7 @@ const Buy = () => {
                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
                   TRACK BUYERS INVOICE THROUGH YOUR PAN
                 </h1>
-                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
                   Whatever cardigan tote bag tumblr hexagon brooklyn
                   asymmetrical gentrify.
                 </p>
@@ -282,7 +291,7 @@ const Buy = () => {
                 <div>
                   <div>
                     <div class="relative">
-                      <label for="name" class="leading-7 text-sm text-gray-600">
+                      <label for="name" class="leading-7 text-sm text-white">
                         Enter your buyers pan
                       </label>
                       <input
@@ -372,7 +381,7 @@ const Buy = () => {
                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
                   TRACK SELLERS INVOICE THROUGH YOUR PAN
                 </h1>
-                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
                   Whatever cardigan tote bag tumblr hexagon brooklyn
                   asymmetrical gentrify.
                 </p>
@@ -381,7 +390,7 @@ const Buy = () => {
                 <div>
                   <div>
                     <div class="relative">
-                      <label for="name" class="leading-7 text-sm text-gray-600">
+                      <label for="name" class="leading-7 text-sm text-white">
                         Enter your sellers pan
                       </label>
                       <input
@@ -409,50 +418,6 @@ const Buy = () => {
               </div>
             </div>
           </section>
-
-          {/* {data.map((item, i) => {
-            return (
-              <>
-                <div class="flex flex-wrap">
-                  <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60">
-                    <h2 class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2">
-                      {item.name}
-                    </h2>
-                    <p class="leading-relaxed text-base mb-4">
-                      {item.invoiceAmount.toString()}
-                    </p>
-                    <p class="leading-relaxed text-base mb-4">
-                      {item.invoiceDate.toString()}
-                    </p>
-                    <p class="leading-relaxed text-base mb-4">
-                      {item.invoiceAmount.toString()}
-                    </p>
-                    <p class="leading-relaxed text-base mb-4">
-                      {item.ProductDescription.toString()}
-                    </p>
-                    <a class="text-indigo-500 inline-flex items-center">
-                      Learn More
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        class="w-4 h-4 ml-2"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-
-                <button class="flex mx-auto mt-16 text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg">
-                  SEE ON ETHERSCAN
-                </button>
-              </>
-            );
-          })} */}
 
           <section class="text-gray-600 body-font">
             <div class="container px-5 py-24 mx-auto">
@@ -513,7 +478,7 @@ const Buy = () => {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               TRACK YOUR PRODUCT
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
               gentrify.
             </p>
@@ -522,8 +487,8 @@ const Buy = () => {
             <div>
               <div>
                 <div class="relative">
-                  <label for="name" class="leading-7 text-sm text-gray-600">
-                    Name
+                  <label for="name" class="leading-7 text-sm text-white">
+                    Enter the product Id you want to track
                   </label>
                   <input
                     name="pan"
@@ -554,7 +519,7 @@ const Buy = () => {
                           Track your product{" "}
                         </h1>
                         <div class="flex mb-4"></div>
-                        <p class="leading-relaxed mb-4">
+                        <p class="leading-relaxed mb-4 text-white">
                           You can track all the details of your shipment here in
                           the block.
                         </p>
@@ -562,20 +527,20 @@ const Buy = () => {
                           <span class="text-gray-500">
                             status of your product
                           </span>
-                          <span class="ml-auto text-gray-900">
+                          <span class="ml-auto text-white">
                             {trackData.status}
                           </span>
                         </div>
                         <div class="flex border-t border-gray-200 py-2">
                           <span class="text-gray-500">address to track</span>
-                          <span class="ml-auto text-gray-900">
+                          <span class="ml-auto text-white">
                             {" "}
                             {trackData.owner}
                           </span>
                         </div>
                         <div class="flex border-t border-b mb-6 border-gray-200 py-2">
                           <span class="text-gray-500">Time lock</span>
-                          <span class="ml-auto text-gray-900">
+                          <span class="ml-auto text-white">
                             {trackData.timelock}
                           </span>
                         </div>

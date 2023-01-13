@@ -2,19 +2,22 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Home from "./components/Home/Home";
+import Sell from "./components/Sell/Sell";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
 import Buy from "./components/Buy/Buy";
 import Events from "./components/Events/Events";
+import Home from './components/Home/Home';
 
 function App() {
   return (
     <>
+        <div className="bg-slate-900">
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path={"/"} element={<Home/>}></Route>
+          <Route path="/sell" element={<Sell />}></Route>
           <Route path="/buy" element={<Buy/>}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/events" element={<Events/>}></Route>
@@ -22,6 +25,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      </div>
     </>
   );
 }

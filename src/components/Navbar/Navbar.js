@@ -44,22 +44,25 @@ const Navbar = () => {
           >
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
           </svg>
-          <span className="ml-3 text-xl">Block-verse</span>
+          <span className="ml-3 text-xl text-white">Block-verse</span>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <NavLink to="/" className="mr-5 px-1  text-pink-600 text-xl">
-            Sell
+        <NavLink to="/" className="mr-5 px-1  text-white text-xl">
+            Home
           </NavLink>
-          <NavLink to="/buy" className="mr-5 px-1 text-pink-600 text-xl">
+          <NavLink to="/sell" className="mr-5 px-1  text-white text-xl">
+            Sell & Buy
+          </NavLink>
+          <NavLink to="/buy" className="mr-5 px-1 text-white text-xl">
             Orders
           </NavLink>
-          <NavLink to="/events" className="mr-5 px-1 text-pink-600 text-xl">
+          <NavLink to="/events" className="mr-5 px-1 text-white text-xl">
             Events
           </NavLink>
-          <NavLink to="/about" className="mr-5 px-1 text-pink-600 text-xl">
+          <NavLink to="/about" className="mr-5 px-1 text-white text-xl">
             About
           </NavLink>
-          <NavLink to="/contact" className="mr-5 px-1 text-pink-600 text-xl">
+          <NavLink to="/contact" className="mr-5 px-1 text-white text-xl">
             Contact
           </NavLink>
         </nav>
