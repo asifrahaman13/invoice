@@ -76,11 +76,16 @@ const Sell = () => {
           pinata_secret_api_key: API_SECRET,
         },
       });
-      console.log(response.data.IpfsHash);
       const res = await response.data.IpfsHash;
       await setIPFSHASH(res);
-      console.log(`This is the:${myipfsHash}`);
       setId(myipfsHash)
+      if(response!=""){
+        toast.success("Your file is uploaded successfully")
+      }
+      else{
+        toast.error("Something went wrong")
+      }
+      
     } catch (err) {
       toast.error("Something went wrong.", err);
     }
@@ -279,7 +284,7 @@ const Sell = () => {
               <div class="p-2">
                 <div class="relative">
                   <label for="email" class="leading-7 text-sm text-white">
-                    Product Price
+                    UPLOAD FILE
                   </label>
                   <input
                     type="file"

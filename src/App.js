@@ -8,6 +8,7 @@ import About from "./components/About/About";
 import Buy from "./components/Buy/Buy";
 import Events from "./components/Events/Events";
 import Home from './components/Home/Home';
+import Details from './components/Details/Details';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path={"/"} element={<Home/>}></Route>
+          <Route path={"/:slug"} element={<Details/>}></Route>
           <Route path="/sell" element={<Sell />}></Route>
           <Route path="/buy" element={<Buy/>}></Route>
           <Route path="/contact" element={<Contact />}></Route>

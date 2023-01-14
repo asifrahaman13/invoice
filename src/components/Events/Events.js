@@ -183,7 +183,7 @@ const Events = () => {
                         Product Id
                       </h1>
                       <p>
-                        {ethers.utils.formatEther(item.args.Product_Id) * 1e18}
+                        {item.args.Product_id}
                       </p>
                       <br />
                       <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
@@ -244,7 +244,7 @@ const Events = () => {
                       <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
                         Product Id
                       </h1>
-                      <p>{ethers.utils.formatEther(item.args.productId,0)*1e18}</p>
+                      <p>{item.args.productId}</p>
                       <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4"></div>
                     </div>
                   </div>

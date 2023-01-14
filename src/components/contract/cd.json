@@ -62,44 +62,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_sellersPAN",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "Product_Name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "Product_Description",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "Product_Price",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "ProductId",
-				"type": "string"
-			}
-		],
-		"name": "Submit",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -199,6 +161,44 @@
 		],
 		"name": "Product_register",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_sellersPAN",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Product_Name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Product_Description",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "Product_Price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "ProductId",
+				"type": "string"
+			}
+		],
+		"name": "Submit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -545,6 +545,52 @@
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "_productid",
+				"type": "string"
+			}
+		],
+		"name": "ProductsDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "Product_Owner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "Product_Name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Product_Description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "Product_Price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "product_id",
+						"type": "string"
+					}
+				],
+				"internalType": "struct EthCart.Product_Details",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
 				"name": "",
 				"type": "string"
 			}
@@ -594,6 +640,11 @@
 				"internalType": "uint256",
 				"name": "invoiceDate",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "ProductDescription",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -625,6 +676,11 @@
 						"internalType": "uint256",
 						"name": "invoiceDate",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "ProductDescription",
+						"type": "string"
 					}
 				],
 				"internalType": "struct EthCart.SellersPanDetails[]",
@@ -664,6 +720,11 @@
 				"internalType": "uint256",
 				"name": "invoiceDate",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "ProductDescription",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",

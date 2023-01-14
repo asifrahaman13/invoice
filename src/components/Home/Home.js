@@ -67,7 +67,6 @@ const Home = () => {
       };
 
       setHomedisplay(a(p.slice(0, 20)));
-      console.log(homedisplay)
     } catch (err) {
       toast.error("Something went wrong.", err);
     }
