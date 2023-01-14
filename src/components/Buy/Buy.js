@@ -456,9 +456,9 @@ const Buy = () => {
                           </p>
                           <br />
                           <br />
-                          <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
+                          {/* <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
                             Sellers Transaction Id
-                          </h1>
+                          </h1> */}
 
                           <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4"></div>
                         </div>

@@ -121,7 +121,7 @@ const Events = () => {
                         Product Id
                       </h1>
                       <p>
-                        {ethers.utils.formatEther(item.args.Product_Id) * 1e18}
+                        {item.args.Product_Id}
                       </p>
                       <br />
                       <h1 class="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">

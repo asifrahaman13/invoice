@@ -5,6 +5,7 @@ import Stats from "./Stats/Stats";
 import Available from "./Available/Available";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Sell = () => {
   const [name, setName] = useState("");
@@ -13,11 +14,14 @@ const Sell = () => {
   const [description, setdescription] = useState("");
   const [price, setPrice] = useState(0);
   const [id, setId] = useState(0);
+  const [pinata, setPinata] = useState("");
 
   const [buyers_pan, setBuyers_pan] = useState("");
   const [buyersName, setBuyersName] = useState("");
   const [product_id, setProduct_id] = useState("");
   const [cancel, setCancel] = useState(0);
+  const [file, setFile] = useState();
+  const [myipfsHash, setIPFSHASH] = useState("");
 
   const [b, setB] = useState([]);
 
@@ -49,8 +53,42 @@ const Sell = () => {
     // document.getElementById("stats").click();
   }, []);
 
+  const upload = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("starting");
+
+      const formData = new FormData();
+
+      formData.append("file", file);
+
+      const API_KEY = " 72ab62449a78181a1cc1";
+      const API_SECRET =
+        "6d226f2c9ecc9a7696cb978a5c922839aa00c746ac2494f122f53ffea1130e06";
+
+      const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+
+      const response = await axios.post(url, formData, {
+        maxContentLength: "Infinity",
+        headers: {
+          "Content-Type": `multipart/form-data;boundary=${formData._boundary}`,
+          pinata_api_key: API_KEY,
+          pinata_secret_api_key: API_SECRET,
+        },
+      });
+      console.log(response.data.IpfsHash);
+      const res = await response.data.IpfsHash;
+      await setIPFSHASH(res);
+      console.log(`This is the:${myipfsHash}`);
+      setId(myipfsHash)
+    } catch (err) {
+      toast.error("Something went wrong.", err);
+    }
+  };
+
   const submitOnChain = async (e) => {
     e.preventDefault();
+    console.log(`The address is:${myipfsHash}`);
     try {
       const tx = await contract.Submit(
         name,
@@ -58,13 +96,14 @@ const Sell = () => {
         productname,
         description,
         price,
-        id
+        myipfsHash
       );
       if (tx.length != 0) {
         toast.success("Yout product is listed successfully.");
       } else {
         toast.error("Something went wrong.");
       }
+      console.log(tx);
     } catch (err) {
       toast.error("Something went wrong.", err);
     }
@@ -193,7 +232,7 @@ const Sell = () => {
                     Product name
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     placeholder="Enter your product name"
                     id="email"
                     name="email"
@@ -237,30 +276,50 @@ const Sell = () => {
                   />
                 </div>
               </div>
+              <div class="p-2">
+                <div class="relative">
+                  <label for="email" class="leading-7 text-sm text-white">
+                    Product Price
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    placeholder="Upload the file"
+                    name="file"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </div>
+              </div>
+             <button
+                  class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
+                  onClick={upload}
+                >
+                 UPLOAD THE FILE
+                </button>
+                
 
               <div class="p-2 w-full">
                 <div class="relative">
                   <label for="message" class="leading-7 text-sm text-white">
                     Product ID
                   </label>
-                  <textarea
+                  <div
                     id="message"
                     placeholder="Enter your product's id:Please note that it should be unique"
                     name="message"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                    onChange={(e) => {
-                      setId(e.target.value);
-                    }}
-                  ></textarea>
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-white-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  >{`Your Product id is: ${myipfsHash}`}</div>
                 </div>
               </div>
               <div class="p-2 w-full">
-                <button
+              {myipfsHash &&   <button
                   class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
                   onClick={submitOnChain}
                 >
                   LIST YOUR PRODUCT NOW
                 </button>
+}
               </div>
             </div>
           </div>
