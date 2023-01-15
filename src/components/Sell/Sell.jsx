@@ -40,13 +40,11 @@ const Sell = () => {
   useEffect(() => {
     main();
     document.getElementById("c").click();
-    // document.getElementById("stats").click();
   }, []);
 
   const upload = async (e) => {
     e.preventDefault();
     try {
-      console.log("starting");
 
       const formData = new FormData();
 
@@ -81,7 +79,6 @@ const Sell = () => {
 
   const submitOnChain = async (e) => {
     e.preventDefault();
-    console.log(`The address is:${myipfsHash}`);
     try {
       const tx = await contract.Submit(
         name,
@@ -93,21 +90,6 @@ const Sell = () => {
       );
       if (tx.length != 0) {
         toast.success("Yout product is listed successfully.");
-      } else {
-        toast.error("Something went wrong.");
-      }
-      console.log(tx);
-    } catch (err) {
-      toast.error("Something went wrong.", err);
-    }
-  };
-
-  const BuyOnchain = async (e) => {
-    e.preventDefault();
-    try {
-      const tx = await contract.Buy(product_id, buyers_pan, buyersName);
-      if (tx.length != 0) {
-        toast.success("You brought this product successfully");
       } else {
         toast.error("Something went wrong.");
       }
@@ -136,26 +118,6 @@ const Sell = () => {
       toast.error("Something went wrong.", err);
     }
   };
-
-  // const stats = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const tx1 = await contract.TotalSellers();
-  //     const tx2 = await contract.TotalBuyers();
-  //     const tx3 = await contract.TotalProducts();
-  //     setStat({
-  //       total_products: ethers.utils.formatEther(tx1, 0) * 1e18,
-  //       total_buyers: ethers.utils.formatEther(tx2, 0) * 1e18,
-  //       total_sellers: ethers.utils.formatEther(tx3, 0) * 1e18,
-  //     });
-  //     if (tx1.length != 0 && tx2.length != 0 && tx3.length != 0) {
-  //     } else {
-  //       toast.error("Something went wrong");
-  //     }
-  //   } catch (err) {
-  //     toast.error("Somthing went wrong", err);
-  //   }
-  // };
 
   const CancelProduct = async (e) => {
     e.preventDefault();

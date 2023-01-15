@@ -42,7 +42,7 @@ const ShowInHome = ({ showProducts, homedisplay }) => {
                       <h2 className="text-gray-900 title-font text-lg font-medium">
                         The Catalyzer
                       </h2>
-                      <p className="mt-1">$16.00</p>
+                      <p className="mt-1">{parseInt(ethers.utils.formatEther(item.Product_Price,18)*1e18)}</p>
                     </div>
                   </div>
                 </>

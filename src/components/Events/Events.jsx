@@ -174,16 +174,21 @@ const Events = () => {
                       </div>
                       <br />
                       <h1 className="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
-                        Product Owner
+                        BLOCK HASH
                       </h1>
                       <p>{item.args.Product_Buyer}</p>
+                      <br />
+                      <h1 className="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
+                        Product Owner
+                      </h1>
+                      <p>{item.blockHash}</p>
                       <br />
 
                       <h1 className="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
                         Product Id
                       </h1>
                       <p>
-                        {item.args.Product_id}
+                      {item.args.Product_Id}
                       </p>
                       <br />
                       <h1 className="tracking-widest text-xl title-font font-medium text-gray-400 mb-1 py-2">
@@ -205,7 +210,6 @@ const Events = () => {
           </div>
         </div>
       </section>
-
 
 
       <section className="text-gray-600 body-font">
