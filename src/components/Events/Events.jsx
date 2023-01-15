@@ -129,7 +129,7 @@ const Events = () => {
                       </h1>
                       <p className="leading-relaxed mb-3">
                         {" "}
-                        {ethers.utils.formatEther(item.args.Product_Price) *
+                        {ethers.utils.formatEther(item.args.Product_Price,0) *
                           1e18}
                       </p>
                       <br />

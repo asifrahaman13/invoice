@@ -119,13 +119,7 @@ const Details = () => {
                   PRODUCT PRICE
                 </h3>
               </div>
-              <p className="leading-relaxed">{price}</p>
-
-              <div className="flex">
-                <span className="title-font font-medium text-2xl text-gray-900">
-                  $58.00
-                </span>
-              </div>
+              <p className="leading-relaxed">Ξ {price} (ETH)</p>
             </div>
           </div>
         </div>
