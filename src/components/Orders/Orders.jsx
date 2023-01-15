@@ -215,7 +215,6 @@ const Buy = () => {
           </div>
         </div>
       </section>
-  
 
       <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto">
@@ -288,7 +287,10 @@ const Buy = () => {
                 <div>
                   <div>
                     <div className="relative">
-                      <label for="name" className="leading-7 text-sm text-white">
+                      <label
+                        for="name"
+                        className="leading-7 text-sm text-white"
+                      >
                         Enter your buyers pan
                       </label>
                       <input
@@ -387,7 +389,10 @@ const Buy = () => {
                 <div>
                   <div>
                     <div className="relative">
-                      <label for="name" className="leading-7 text-sm text-white">
+                      <label
+                        for="name"
+                        className="leading-7 text-sm text-white"
+                      >
                         Enter your sellers pan
                       </label>
                       <input
@@ -525,7 +530,9 @@ const Buy = () => {
                           </span>
                         </div>
                         <div className="flex border-t border-gray-200 py-2">
-                          <span className="text-gray-500">address to track</span>
+                          <span className="text-gray-500">
+                            address to track
+                          </span>
                           <span className="ml-auto text-white">
                             {" "}
                             {trackData.owner}

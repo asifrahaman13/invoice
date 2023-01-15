@@ -1,11 +1,10 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { ethers } from "ethers";
 import { NavLink } from "react-router-dom";
 import Details from "../../Details/Details";
 
 const ShowInHome = ({ showProducts, homedisplay }) => {
-
-  useEffect(() => {;
+  useEffect(() => {
     document.getElementById("home_display").click();
   }, []);
 
