@@ -71,58 +71,58 @@ const Details = () => {
 
   return (
     <>
-      <section class="text-gray-600 body-font overflow-hidden">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <section className="text-gray-600 body-font overflow-hidden">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
-              class="h-84 w-85 object-cover object-center rounded"
+              className="h-84 w-85 object-cover object-center rounded"
               src={`https://gateway.pinata.cloud/ipfs/${slug}`}
             />
-            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <div class="mt-4">
-                <h3 class="text-xl text-green-500 tracking-widest title-font mb-1">
+            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <div className="mt-4">
+                <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">
                   PRODUCT ID
                 </h3>
               </div>
-              <p class="leading-relaxed">{homedisplay.product_id}</p>
+              <p className="leading-relaxed">{homedisplay.product_id}</p>
 
-              <div class="mt-4">
-                <h3 class="text-xl text-green-500 tracking-widest title-font mb-1">
+              <div className="mt-4">
+                <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">
                   PRODUCT NAME
                 </h3>
               </div>
-              <p class="leading-relaxed">{homedisplay.Product_Name}</p>
+              <p className="leading-relaxed">{homedisplay.Product_Name}</p>
 
-              <div class="mt-4">
-                <h3 class="text-xl text-green-500 tracking-widest title-font mb-1">
+              <div className="mt-4">
+                <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">
                   PRODUCT LISTED BY
                 </h3>
               </div>
-              <h2 class="text-sm title-font text-gray-500 tracking-widest">
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {homedisplay.Product_Owner}
               </h2>
-              <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 The Catcher in the Rye
               </h1>
-              <div class="flex mb-4"></div>
+              <div className="flex mb-4"></div>
 
-              <div class="mt-4">
-                <h3 class="text-xl text-green-500 tracking-widest title-font mb-1">
+              <div className="mt-4">
+                <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">
                   PRODUCT DESCIPTION
                 </h3>
               </div>
-              <p class="leading-relaxed">{homedisplay.Product_Description}</p>
+              <p className="leading-relaxed">{homedisplay.Product_Description}</p>
 
-              <div class="mt-4">
-                <h3 class="text-xl text-green-500 tracking-widest title-font mb-1">
+              <div className="mt-4">
+                <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">
                   PRODUCT PRICE
                 </h3>
               </div>
-              <p class="leading-relaxed">{price}</p>
+              <p className="leading-relaxed">{price}</p>
 
-              <div class="flex">
-                <span class="title-font font-medium text-2xl text-gray-900">
+              <div className="flex">
+                <span className="title-font font-medium text-2xl text-gray-900">
                   $58.00
                 </span>
               </div>
@@ -130,51 +130,51 @@ const Details = () => {
           </div>
         </div>
       </section>
-      <section class="text-white body-font relative">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-col text-center w-full mb-12">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
+      <section className="text-white body-font relative">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-col text-center w-full mb-12">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
               Buy any product here
             </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
+            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-white">
               Buy the products
             </p>
           </div>
-          <div class="lg:w-1/2 md:w-2/3 mx-auto">
+          <div className="lg:w-1/2 md:w-2/3 mx-auto">
             <div>
-              <div class="p-2">
-                <div class="relative">
-                  <label for="name" class="leading-7 text-sm text-white">
+              <div className="p-2">
+                <div className="relative">
+                  <label for="name" className="leading-7 text-sm text-white">
                     Product Id
                   </label>
                   <div
                     id="message"
                     placeholder="Enter your product's id:Please note that it should be unique"
                     name="message"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-white-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out text-yellow-500"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-white-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out text-yellow-500"
                   >{`Your Product id is:${homedisplay.product_id}`}</div>
                 </div>
               </div>
-              <div class="p-2">
-                <div class="relative">
-                  <label for="email" class="leading-7 text-sm text-white">
-                    Buyer pan
+              <div className="p-2">
+                <div className="relative">
+                  <label for="email" className="leading-7 text-sm text-white">
+                    Buyer pan(Should be of 12 digit)
                   </label>
                   <input
                     type="text"
                     placeholder="Enter your buyer's pan"
                     id="buyers_pan"
                     name="buyers_pan"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     onChange={(e) => {
                       setBuyers_pan(e.target.value);
                     }}
                   />
                 </div>
               </div>
-              <div class="p-2">
-                <div class="relative">
-                  <label for="email" class="leading-7 text-sm text-white">
+              <div className="p-2">
+                <div className="relative">
+                  <label for="email" className="leading-7 text-sm text-white">
                     Name
                   </label>
                   <input
@@ -182,7 +182,7 @@ const Details = () => {
                     placeholder="Enter your name"
                     id="name"
                     name="name"
-                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     onChange={(e) => {
                       setBuyersName(e.target.value);
                     }}
@@ -190,9 +190,9 @@ const Details = () => {
                 </div>
               </div>
 
-              <div class="p-2 w-full">
+              <div className="p-2 w-full">
                 <button
-                  class="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
+                  className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
                   onClick={BuyOnchain}
                 >
                   BUY THIS PRODUCT NOW
