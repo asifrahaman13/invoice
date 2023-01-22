@@ -43,12 +43,12 @@ const ShowInHome = ({ showProducts, homedisplay }) => {
                         {item.Product_Name}
                       </h3>
                       <p className="mt-1">
-                        Ξ{" "}
+                      ₹{" "}
                         {parseInt(
                           ethers.utils.formatEther(item.Product_Price, 18) *
                             1e18
                         )}{" "}
-                        (ETH)
+                        (INR)
                       </p>
                     </div>
                   </div>

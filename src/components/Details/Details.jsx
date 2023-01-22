@@ -109,7 +109,7 @@ const Details = () => {
                   PRODUCT PRICE
                 </h3>
               </div>
-              <p className="leading-relaxed">Ξ {price} (ETH)</p>
+              <p className="leading-relaxed">₹ {price} (INR)</p>
             </div>
           </div>
         </div>

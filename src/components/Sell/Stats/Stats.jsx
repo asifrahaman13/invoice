@@ -35,6 +35,7 @@ const Stats = () => {
     main();
     stats();
     document.getElementById("stats").click();
+    document.getElementById("stats").click();
   }, []);
 
   const subscribe = async (e) => {
