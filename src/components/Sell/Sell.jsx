@@ -13,10 +13,6 @@ const Sell = () => {
   const [productname, setproductname] = useState("");
   const [description, setdescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [buyers_pan, setBuyers_pan] = useState("");
-  const [buyersName, setBuyersName] = useState("");
-  const [product_id, setProduct_id] = useState("");
-  const [cancel, setCancel] = useState(0);
   const [file, setFile] = useState();
   const [myipfsHash, setIPFSHASH] = useState("");
   const [b, setB] = useState([]);
@@ -45,16 +41,14 @@ const Sell = () => {
   const upload = async (e) => {
     e.preventDefault();
     try {
-
       const formData = new FormData();
 
       formData.append("file", file);
 
-      const API_KEY = " 72ab62449a78181a1cc1";
-      const API_SECRET =
-        "6d226f2c9ecc9a7696cb978a5c922839aa00c746ac2494f122f53ffea1130e06";
+      const API_KEY = process.env.REACT_APP_APIKEY;
+      const API_SECRET =process.env.REACT_APP_SECRETKEY;
 
-      const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+      const url = process.env.REACT_APP_PINATA;
 
       const response = await axios.post(url, formData, {
         maxContentLength: "Infinity",
@@ -94,7 +88,7 @@ const Sell = () => {
         toast.error("Something went wrong.");
       }
     } catch (err) {
-      toast.error("Something went wrong.", err);
+      toast.error("Something went wrong."+ err);
     }
   };
 
@@ -102,7 +96,6 @@ const Sell = () => {
     e.preventDefault();
     try {
       const p = await contract.AvailableProducts();
-      const t = [];
       const a = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -118,20 +111,6 @@ const Sell = () => {
       toast.error("Something went wrong.", err);
     }
   };
-
-  const CancelProduct = async (e) => {
-    e.preventDefault();
-    try {
-      const tx = await contract.cancel(cancel);
-    } catch (err) {
-      if (cancel == "") {
-        toast.error("Please enter a id");
-      } else {
-        toast.error("Somthing went wrong", err);
-      }
-    }
-  };
-
   return (
     <>
       <section className="text-white body-font relative">
@@ -253,78 +232,39 @@ const Sell = () => {
                 UPLOAD THE FILE
               </button>
 
-              <div className="p-2 w-full">
-                <div className="relative">
-                  <label for="message" className="leading-7 text-sm text-white">
-                    Product ID
-                  </label>
-                  <div
-                    id="message"
-                    placeholder="Enter your product's id:Please note that it should be unique"
-                    name="message"
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-white-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  >{`Your Product id is: ${myipfsHash}`}</div>
+              {myipfsHash && (
+                <div className="product">
+                  <div className="p-2 w-full">
+                    <div className="relative">
+                      <label
+                        for="message"
+                        className="leading-7 text-sm text-white"
+                      >
+                        Product ID
+                      </label>
+                      <div
+                        id="message"
+                        placeholder="Enter your product's id:Please note that it should be unique"
+                        name="message"
+                        className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-white-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                      >{`Your Product id is: ${myipfsHash}`}</div>
+                    </div>
+                  </div>
+                  <div className="p-2 w-full">
+                    <button
+                      className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
+                      onClick={submitOnChain}
+                    >
+                      LIST YOUR PRODUCT NOW
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="p-2 w-full">
-                {myipfsHash && (
-                  <button
-                    className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
-                    onClick={submitOnChain}
-                  >
-                    LIST YOUR PRODUCT NOW
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="text-white body-font relative">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-12">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
-              CANCEL PRODUCT
-            </h1>
-            <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Cancel prodcuct delivery using product Id
-            </p>
-          </div>
-          <div className="lg:w-1/2 md:w-2/3 mx-auto">
-            <div>
-              <div className="p-2">
-                <div className="relative">
-                  <label for="name" className="leading-7 text-sm text-white">
-                    Enter Product Id
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter the product Id you want to cancel"
-                    id="product_id"
-                    name="product_id"
-                    className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    onChange={(e) => {
-                      setCancel(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="p-2 w-full">
-                <button
-                  className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"
-                  onClick={CancelProduct}
-                >
-                  CANCEL THIS PRODUCT NOW
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </div>
       </section>
       <Available showProducts={showProducts} b={b} />
-
       <ToastContainer />
     </>
   );

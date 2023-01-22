@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { default as credit } from "../contract/contract.json";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Stats from "../Sell/Stats/Stats";
 import ShowInHome from "./ShowInHome/ShowInHome";
 
 const Home = () => {
   const [homedisplay, setHomedisplay] = useState([]);
+  const [subscribers, setSubscribers] = useState([""]);
 
   const [stat, setStat] = useState({
     total_products: 0,
@@ -33,8 +34,9 @@ const Home = () => {
 
   useEffect(() => {
     main();
-    document.getElementById("home_display").click();
-    document.getElementById("stats").click();
+    showProducts();
+    showSubscribers();
+    stats();
   }, []);
 
   const showProducts = async (e) => {
@@ -42,7 +44,6 @@ const Home = () => {
 
     try {
       const p = await contract.AvailableProducts();
-      const t = [];
       const a = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -58,6 +59,18 @@ const Home = () => {
       toast.error("Something went wrong.", err);
     }
   };
+
+  const showSubscribers = async (e) => {
+    console.log("dfdf");
+    try {
+      const tx = await contract.showSubscribers();
+      console.log(tx);
+      setSubscribers(tx.slice(0, 20));
+    } catch (err) {
+      toast.error("Something went wrong.");
+    }
+  };
+
   const stats = async (e) => {
     e.preventDefault();
     try {
@@ -80,17 +93,32 @@ const Home = () => {
 
   return (
     <>
-      <Stats
-        total_products={stat.total_products}
-        total_buyers={stat.total_buyers}
-        total_sellers={stat.total_sellers}
-        stats={stats}
-      />
+      <Stats/>
       <ShowInHome showProducts={showProducts} homedisplay={homedisplay} />
+      <center>
+        <h1 className="text-3xl font-medium title-font text-pink-600 mb-12 text-center">
+          OUR SUBSCRIBERS
+        </h1>
+        <div class="w-2/3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white text-center">
+          {subscribers.map((item, idx) => {
+            return (
+              <>
+                <button
+                  type="button"
+                  class="w-full px-4 py-2 font-medium border-b 
+                  bg-pink-100 border-gray-200 cursor-pointer hover:bg-yellow-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white text-center"
+                >
+                  {item}
+                </button>
+              </>
+            );
+          })}
+        </div>
+      </center>
       <section className="text-white body-font">
         <div className="container px-5 py-24 mx-auto">
           <h1 className="text-3xl font-medium title-font text-pink-600 mb-12 text-center">
-            Testimonials
+            TESTIMONIALS
           </h1>
           <div className="flex flex-wrap -m-4">
             <div className="p-4 md:w-1/2 w-full">

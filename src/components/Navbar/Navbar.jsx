@@ -51,7 +51,7 @@ const Navbar = () => {
             Home
           </NavLink>
           <NavLink to="/sell" className="mr-5 px-1  text-white text-xl">
-            Sell & Buy
+            Sell 
           </NavLink>
           <NavLink to="/buy" className="mr-5 px-1 text-white text-xl">
             Orders

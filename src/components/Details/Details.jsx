@@ -7,30 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Details = () => {
   const { slug } = useParams();
-
-  const [name, setName] = useState("");
-  const [pan, setPan] = useState("");
-  const [productname, setproductname] = useState("");
-  const [description, setdescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [id, setId] = useState(0);
-
   const [buyers_pan, setBuyers_pan] = useState("");
   const [buyersName, setBuyersName] = useState("");
-  const [product_id, setProduct_id] = useState("");
-  const [cancel, setCancel] = useState(0);
-  const [Showinhome, setShowinhome] = useState([]);
-
   const [homedisplay, setHomedisplay] = useState([]);
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-
   const signer = provider.getSigner();
-
   const contractAddress = process.env.REACT_APP_CONTRACT;
-
   const ABI = credit;
-
   const contract = new ethers.Contract(contractAddress, ABI, signer);
 
   const main = async () => {
@@ -71,9 +56,9 @@ const Details = () => {
 
   return (
     <>
-    <h1 className="sm:text-3xl py-10 text-2xl font-medium title-font mb-4 text-pink-600 text-center">
-          PRODUCT DETAILS
-        </h1>
+      <h1 className="sm:text-3xl py-10 text-2xl font-medium title-font mb-4 text-pink-600 text-center">
+        PRODUCT DETAILS
+      </h1>
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
@@ -115,7 +100,9 @@ const Details = () => {
                   PRODUCT DESCIPTION
                 </h3>
               </div>
-              <p className="leading-relaxed text-justify">{homedisplay.Product_Description}</p>
+              <p className="leading-relaxed text-justify">
+                {homedisplay.Product_Description}
+              </p>
 
               <div className="mt-4">
                 <h3 className="text-xl text-green-500 tracking-widest title-font mb-1">

@@ -19,7 +19,6 @@ const ShowInHome = ({ showProducts, homedisplay }) => {
           CHECK ALL AVAILBALE PRODUCTS
         </button>
       </div>
-
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4">
@@ -57,6 +56,7 @@ const ShowInHome = ({ showProducts, homedisplay }) => {
               );
             })}
           </div>
+         
         </div>
       </section>
     </>

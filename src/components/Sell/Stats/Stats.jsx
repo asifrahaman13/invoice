@@ -1,6 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import { NavLink } from "react-router-dom";
+import { default as credit } from "../../contract/contract.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Stats = ({ total_products, total_buyers, total_sellers, stats }) => {
+const Stats = () => {
+
+
+  const [stat, setStat] = useState({
+    total_products: 0,
+    total_buyers: 0,
+    total_sellers: 0,
+  });
+
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+  const signer = provider.getSigner();
+
+  const contractAddress = process.env.REACT_APP_CONTRACT;
+
+  const ABI = credit;
+
+  const contract = new ethers.Contract(contractAddress, ABI, signer);
+
+  const main = async () => {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+  };
+
+  useEffect(() => {
+    main();
+    stats();
+    document.getElementById("stats").click();
+  }, []);
+
+  const subscribe = async (e) => {
+    console.log("DFD");
+    e.preventDefault();
+    try {
+      const tx = await contract.subscibe();
+      if (tx.length != 0) {
+        toast.error("Something went wrong.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
+  };
+
+  const stats = async (e) => {
+    e.preventDefault();
+    try {
+      const tx1 = await contract.TotalSellers();
+      const tx2 = await contract.TotalBuyers();
+      const tx3 = await contract.TotalProducts();
+      setStat({
+        total_products: ethers.utils.formatEther(tx1, 0) * 1e18,
+        total_buyers: ethers.utils.formatEther(tx2, 0) * 1e18,
+        total_sellers: ethers.utils.formatEther(tx3, 0) * 1e18,
+      });
+      if (tx1.length != 0 && tx2.length != 0 && tx3.length != 0) {
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (err) {
+      toast.error("Somthing went wrong", err);
+    }
+  };
+
   return (
     <>
       <button id="stats" onClick={stats}></button>
@@ -19,19 +88,19 @@ const Stats = ({ total_products, total_buyers, total_sellers, stats }) => {
             </div>
             <div className="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
               <h2 className="title-font font-medium text-3xl text-white">
-                {total_products}
+                {stat.total_products}
               </h2>
               <p className="leading-relaxed">Total sellers</p>
             </div>
             <div className="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
               <h2 className="title-font font-medium text-3xl text-white">
-                {total_buyers}
+                {stat.total_buyers}
               </h2>
               <p className="leading-relaxed">Total Buyers</p>
             </div>
             <div className="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
               <h2 className="title-font font-medium text-3xl text-white">
-                {total_sellers}
+                {stat.total_sellers}
               </h2>
               <p className="leading-relaxed">Total Products</p>
             </div>
@@ -43,12 +112,17 @@ const Stats = ({ total_products, total_buyers, total_sellers, stats }) => {
               alt="stats"
             />
           </div>
-          <button className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 mx-1 font-bold">
+          <button
+            className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 mx-1 font-bold"
+            onClick={subscribe}
+          >
             SUBSCRIBE
           </button>
-          <button className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 font-bold">
+          <NavLink to="/contact">
+          <button className="inline-flex items-center bg-pink-600 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-base mt-4 md:mt-0 text-pink-100 font-bold" >
             CONTACT US
           </button>
+          </NavLink>
         </div>
       </section>
     </>
