@@ -82,11 +82,9 @@ const Buy = () => {
   const addDeliveryAgent = async () => {
     try {
       const tx = await contract.AddDeleveryAgent(agent);
-      if (tx.length == 0) {
-        toast.error("Somthing went wrong");
-      } else {
-        toast.success("Delivery agent has been succesffully added");
-      }
+      
+      toast.success("Delivery agent has been succesffully added");
+      
     } catch (err) {
       toast.error("Delivery agent not added");
     }
@@ -96,6 +94,7 @@ const Buy = () => {
     try {
       const tx = await contract.AmountPaid(paid);
       toast.success("Data stored successfully");
+      console.log(tx)
     } catch (err) {
       toast.error("Message not added to blockchain", err);
     }
